@@ -30,10 +30,17 @@ def getFieldFromDB(database, collectionName, docName, fieldName):
 
     return str
 
+def getDocsFromCol(database, collectionName):
+    return database.collection(collectionName).get()
+
 def main():
     database = initializeDb(keyPath)
-    str = getFieldFromDB(database, u'users', u'alovelace', u'born')
-    stringToImage(str, 'images/trollfaceDECODED.jpg')
+    # str = getFieldFromDB(database, u'photos', u'04, 03:59AM on December 15, 2018', u'im')
+    strIngs = getDocsFromCol(database, u'photos')
+    for ims in strIngs:
+        docInfo = ims.to_dict()
+        stringToImage(docInfo[u'im'], "images/" + ims.id + ".jpg")
+
 
 
 if __name__ == '__main__':
